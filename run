@@ -1,12 +1,14 @@
 #!/bin/bash
-VOLUME=/docker
+VOLUME=/from-host
+USER=root
+GROUP=root
 ALLOW=${ALLOW:-192.168.0.0/16 172.16.0.0/12}
 
-chown nobody:nogroup "${VOLUME}"
+chown $USER:$GROUP "${VOLUME}"
 
 [ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
-uid = nobody
-gid = nogroup
+uid = $USER
+gid = $USER
 use chroot = yes
 pid file = /var/run/rsyncd.pid
 log file = /dev/stdout
